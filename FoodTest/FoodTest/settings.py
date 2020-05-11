@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import posixpath
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
+    'django_expiring_token',
     'FoodApp',
 ]
 
@@ -114,6 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'django_expiring_token.authentication.ExpiringTokenAuthentication',
+    ),
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 LANGUAGE_CODE = 'en-us'
@@ -127,4 +134,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['media']))
+
 AUTH_USER_MODEL = 'FoodApp.User'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'foodlinkservice2020@gmail.com'
+EMAIL_HOST_PASSWORD = '33351115Bia'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EXPIRING_TOKEN_DURATION=timedelta(days=30)
